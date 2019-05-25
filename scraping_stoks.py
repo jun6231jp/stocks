@@ -89,7 +89,7 @@ con = mysql.connector.connect(
 con.ping(reconnect=True)
 #クエリ実行
 cur = con.cursor()
-for id in range(1995, 10000):
+for id in range(1300, 10000):
     time.sleep(0.5)
     for page in range(1, 300):
         if webaccess(id,page)==0:

@@ -80,8 +80,8 @@ def webaccess(id,page):
 socket.setdefaulttimeout(36000)
 # mysqlに接続する
 con = mysql.connector.connect(
-     user='root',
-     passwd='rootroot',
+     user='name',
+     passwd='pass',
      host='localhost',
      db='mysql'
 )

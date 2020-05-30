@@ -40,7 +40,7 @@ def webaccess(id,page):
                 name.append(re.sub(r'<th class="symbol"><h1>(.*)</h1></th>', r'\1', str(i)).rstrip('\n'))
                 if name_commit == 0 :
                     try:
-                        cur.execute('insert into stoks.names (id,name) values ('+str(id)+',"'+str(name[0])+'")')
+                        cur.execute('insert into stocks.names (id,name) values ('+str(id)+',"'+str(name[0])+'")')
                         con.commit()
                         print (str(id)+","+str(name[0]))
                         name_commit = 1
@@ -57,20 +57,20 @@ def webaccess(id,page):
         date = re.match(r'<td>(.*年.*)</td>', str(i))
         if td:
             if date:
-                stoks = []
-                stoks.append(id)
-                stoks.append(companyname)
-                stoks.append(re.sub(r'<td>(.*)</td>', r'\1', ((date.group().replace("年","-")).replace("月","-")).replace("日","")).replace(",","") )
+                stocks = []
+                stocks.append(id)
+                stocks.append(companyname)
+                stocks.append(re.sub(r'<td>(.*)</td>', r'\1', ((date.group().replace("年","-")).replace("月","-")).replace("日","")).replace(",","") )
             else:
-                stoks.append(re.sub(r'<td>(.*)</td>', r'\1', str(i)).replace(",","").rstrip('\n'))
+                stocks.append(re.sub(r'<td>(.*)</td>', r'\1', str(i)).replace(",","").rstrip('\n'))
                 
-            if len(stoks)==9 :
+            if len(stocks)==9 :
                 try:
-                    cur.execute('insert into stoks.prices (id,date,open,high,low,close,volume,fixed) values ('+str(stoks[0])+',"'+str(stoks[2])+'",'+str(int(stoks[3]))+','+str(int(stoks[4]))+','+str(int(stoks[5]))+','+str(int(stoks[6]))+','+str(int(stoks[7]))+','+str(int(stoks[8]))+')')
+                    cur.execute('insert into stocks.prices (id,date,open,high,low,close,volume,fixed) values ('+str(stocks[0])+',"'+str(stocks[2])+'",'+str(int(stocks[3]))+','+str(int(stocks[4]))+','+str(int(stocks[5]))+','+str(int(stocks[6]))+','+str(int(stocks[7]))+','+str(int(stocks[8]))+')')
                     con.commit()
-                    print(str(stoks[0])+',"'+str(stoks[2])+'",'+str(int(stoks[3]))+','+str(int(stoks[4]))+','+str(int(stoks[5]))+','+str(int(stoks[6]))+','+str(int(stoks[7]))+','+str(int(stoks[8])))
-                    lastprice=int(stoks[3])
-                    stoks = []
+                    print(str(stocks[0])+',"'+str(stocks[2])+'",'+str(int(stocks[3]))+','+str(int(stocks[4]))+','+str(int(stocks[5]))+','+str(int(stocks[6]))+','+str(int(stocks[7]))+','+str(int(stocks[8])))
+                    lastprice=int(stocks[3])
+                    stocks = []
                 except:
                     con.rollback()
                     return 0                                            
